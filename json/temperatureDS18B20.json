@@ -1,0 +1,23 @@
+{
+    "topic": "homeassistant/sensor/weatherStation/temperatureDS18B20/config",
+    "payload": {
+        "~": "homeassistant/sensor/weatherStation/temperatureDS18B20",
+        "name": "DS18B20 Temperature",
+        "unique_id": "ds18b20_temperature",
+        "cmd_t": "~",
+        "stat_t": "~",
+        "min": "0",
+        "max": "50",
+        "unit_of_measurement": "°C",
+        "icon": "mdi:thermometer",
+        "retain": "false",
+        "device": {
+            "identifiers": [
+                "weather-station"
+            ],
+            "name": "Weather Station",
+            "model": "weather Station",
+            "manufacturer": "Juan Flores"
+        }
+    }
+}

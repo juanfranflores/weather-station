@@ -1,0 +1,23 @@
+{
+    "topic": "homeassistant/sensor/weatherStation/pressureBMP180/config",
+    "payload": {
+        "~": "homeassistant/sensor/weatherStation/pressureBMP180",
+        "name": "BMP180 Pressure",
+        "unique_id": "bmp180_pressure",
+        "cmd_t": "~",
+        "stat_t": "~",
+        "min": "960",
+        "max": "1040",
+        "unit_of_measurement": "hPa",
+        "icon": "mdi:gauge",
+        "retain": "false",
+        "device": {
+            "identifiers": [
+                "weather-station"
+            ],
+            "name": "Weather Station",
+            "model": "weather Station",
+            "manufacturer": "Juan Flores"
+        }
+    }
+}

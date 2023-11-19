@@ -1,0 +1,23 @@
+{
+    "topic": "homeassistant/sensor/weatherStation/humidityDHT11/config",
+    "payload": {
+        "~": "homeassistant/sensor/weatherStation/humidityDHT11",
+        "name": "DHT11 Humidity",
+        "unique_id": "dht11_humidity",
+        "cmd_t": "~",
+        "stat_t": "~",
+        "min": "0",
+        "max": "100",
+        "unit_of_measurement": "%",
+        "icon": "mdi:water-percent",
+        "retain": "false",
+        "device": {
+            "identifiers": [
+                "weather-station"
+            ],
+            "name": "Weather Station",
+            "model": "weather Station",
+            "manufacturer": "Juan Flores"
+        }
+    }
+}
