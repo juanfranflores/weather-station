@@ -32,11 +32,11 @@ float pressBMP180 = 0;
 
 //  ---------------------------- FEEDS  ----------------------------
 
-const char *tempDHT11Feed = "homeassistant/number/weatherStation/temperature/DHT11";
-const char *tempDS18B20Feed = "homeassistant/number/weatherStation/temperature/DS18B20";
-const char *tempBMP180Feed = "homeassistant/number/weatherStation/temperature/BMP180";
-const char *humDHT11Feed = "homeassistant/number/weatherStation/humidity";
-const char *pressBMP180Feed = "homeassistant/number/weatherStation/pressure";
+const char *tempDHT11Feed = "homeassistant/sensor/weatherStation/temperatureDHT11";
+const char *tempDS18B20Feed = "homeassistant/sensor/weatherStation/temperatureDS18B20";
+const char *tempBMP180Feed = "homeassistant/sensor/weatherStation/temperatureBMP180";
+const char *humDHT11Feed = "homeassistant/sensor/weatherStation/humidityDHT11";
+const char *pressBMP180Feed = "homeassistant/sensor/weatherStation/pressureBMP180";
 
 // ---------------------------- INSTANCIAS DE SENSORES  ----------------------------
 
@@ -83,10 +83,24 @@ void loop()
   }
   client.loop();
   readSensorData();
-  printSensorData();
+  // printSensorData();
   publishData(tempBMP180,tempBMP180Feed);
+  publishData(tempDHT11, tempDHT11Feed);
+  publishData(tempDS18B20, tempDS18B20Feed);
+  publishData(humDHT11,humDHT11Feed);
+  publishData(pressBMP180,pressBMP180Feed);
 
-  delay(5000);
+  delay(10000);
+}
+void initBMP()
+{
+  if (!bmp.begin())
+  {
+    Serial.println("Could not find a valid BMP085/BMP180 sensor, check wiring!");
+    while (1)
+    {
+    }
+  }
 }
 
 //  ---------------------------- DEFINICIÓN DE FUNCIONES ----------------------------
@@ -158,15 +172,11 @@ void readSensorData()
 {
   tempDHT11 = dht.readTemperature();
   humDHT11 = dht.readHumidity();
-  // sensors.requestTemperatures();
-  // delay(1000);
-  // tempDS18B20 = sensors.getTempCByIndex(0);
+  sensors.requestTemperatures();
+  delay(200);
+  tempDS18B20 = sensors.getTempCByIndex(0);
   tempBMP180 = bmp.readTemperature();
-  pressBMP180 = bmp.readPressure();
-}
-void publishData(float value, const char *feed)
-{
-  client.publish(feed, String(value).c_str(), true);
+  pressBMP180 = bmp.readPressure()/100;
 }
 void printSensorData()
 {
@@ -177,7 +187,7 @@ void printSensorData()
   Serial.println(" ºC");
   Serial.print("Presión BMP180 = ");
   Serial.print(pressBMP180);
-  Serial.println(" Pa");
+  Serial.println(" hPa");
   Serial.println("------------------------");
   // // Read DS18B20 sensor data
   Serial.print("temperatura DS18B20:");
@@ -193,13 +203,7 @@ void printSensorData()
   Serial.println(F("%"));
   Serial.println("------------------------");
 }
-void initBMP()
+void publishData(float value, const char *feed)
 {
-  if (!bmp.begin())
-  {
-    Serial.println("Could not find a valid BMP085/BMP180 sensor, check wiring!");
-    while (1)
-    {
-    }
-  }
+  client.publish(feed, String(value).c_str(), true);
 }
