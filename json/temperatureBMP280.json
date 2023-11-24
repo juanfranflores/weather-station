@@ -1,9 +1,9 @@
 {
-    "topic": "homeassistant/sensor/weatherStation/temperatureBMP180/config",
+    "topic": "homeassistant/sensor/weatherStation/temperatureBMP280/config",
     "payload": {
-        "~": "homeassistant/sensor/weatherStation/temperatureBMP180",
-        "name": "BMP180 Temperature",
-        "unique_id": "bmp180_temperature",
+        "~": "homeassistant/sensor/weatherStation/temperatureBMP280",
+        "name": "BMP280 Temperature",
+        "unique_id": "bmp280_temperature",
         "cmd_t": "~",
         "stat_t": "~",
         "min": "0",

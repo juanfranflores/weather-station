@@ -1,9 +1,9 @@
 {
-    "topic": "homeassistant/sensor/weatherStation/humidityDHT11/config",
+    "topic": "homeassistant/sensor/weatherStation/humidityDHT22/config",
     "payload": {
-        "~": "homeassistant/sensor/weatherStation/humidityDHT11",
-        "name": "DHT11 Humidity",
-        "unique_id": "dht11_humidity",
+        "~": "homeassistant/sensor/weatherStation/humidityDHT22",
+        "name": "DHT22 Humidity",
+        "unique_id": "dht22_humidity",
         "cmd_t": "~",
         "stat_t": "~",
         "min": "0",

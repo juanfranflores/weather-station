@@ -1,9 +1,9 @@
 {
-    "topic": "homeassistant/sensor/weatherStation/temperatureDHT11/config",
+    "topic": "homeassistant/sensor/weatherStation/temperatureDHT22/config",
     "payload": {
-        "~": "homeassistant/sensor/weatherStation/temperatureDHT11",
-        "name": "DHT11 Temperature",
-        "unique_id": "dht11_temperature",
+        "~": "homeassistant/sensor/weatherStation/temperatureDHT22",
+        "name": "DHT22 Temperature",
+        "unique_id": "dht22_temperature",
         "cmd_t": "~",
         "stat_t": "~",
         "min": "0",

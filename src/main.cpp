@@ -3,8 +3,7 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <Wire.h>
-#include <Adafruit_BMP085.h>
-#include <SPI.h>
+#include <Adafruit_BMP280.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include "DHT.h"
@@ -12,7 +11,7 @@
 // ---------------------------- DEFINICIÓN DE PINES ----------------------------
 
 #define DHTPIN 4
-#define DHTTYPE DHT11
+#define DHTTYPE DHT22
 #define ONE_WIRE_BUS 13
 
 // ---------------------------- CREDENCIALES DE CONEXIÓN ----------------------------
@@ -24,27 +23,26 @@ const char *clientId = "weatherStation";
 
 // ---------------------------- VARIABLES DE SENSORES ----------------------------
 
-float tempDHT11 = 0;
+float tempDHT22 = 0;
 float tempDS18B20 = 0;
-float tempBMP180 = 0;
-float humDHT11 = 0;
-float pressBMP180 = 0;
+float tempBMP280 = 0;
+float humDHT22 = 0;
+float pressBMP280 = 0;
 
 //  ---------------------------- FEEDS  ----------------------------
 
-const char *tempDHT11Feed = "homeassistant/sensor/weatherStation/temperatureDHT11";
+const char *tempDHT22Feed = "homeassistant/sensor/weatherStation/temperatureDHT22";
 const char *tempDS18B20Feed = "homeassistant/sensor/weatherStation/temperatureDS18B20";
-const char *tempBMP180Feed = "homeassistant/sensor/weatherStation/temperatureBMP180";
-const char *humDHT11Feed = "homeassistant/sensor/weatherStation/humidityDHT11";
-const char *pressBMP180Feed = "homeassistant/sensor/weatherStation/pressureBMP180";
+const char *tempBMP280Feed = "homeassistant/sensor/weatherStation/temperatureBMP280";
+const char *humDHT22Feed = "homeassistant/sensor/weatherStation/humidityDHT22";
+const char *pressBMP280Feed = "homeassistant/sensor/weatherStation/pressureBMP280";
 
 // ---------------------------- INSTANCIAS DE SENSORES  ----------------------------
 
 OneWire oneWire(ONE_WIRE_BUS);       ///////////// Setup a oneWire instance to communicate with any OneWire devices
 DallasTemperature sensors(&oneWire); ///// Pass our oneWire reference to Dallas Temperature sensor
-Adafruit_BMP085 bmp;
 DHT dht(DHTPIN, DHTTYPE);
-
+Adafruit_BMP280 bmp;
 //  ---------------------------- DEFINICIÓN DE FUNCIONES  ----------------------------
 void printSensorData();
 void readSensorData();
@@ -84,23 +82,28 @@ void loop()
   client.loop();
   readSensorData();
   // printSensorData();
-  publishData(tempBMP180,tempBMP180Feed);
-  publishData(tempDHT11, tempDHT11Feed);
+  publishData(tempBMP280, tempBMP280Feed);
+  publishData(tempDHT22, tempDHT22Feed);
   publishData(tempDS18B20, tempDS18B20Feed);
-  publishData(humDHT11,humDHT11Feed);
-  publishData(pressBMP180,pressBMP180Feed);
+  publishData(humDHT22, humDHT22Feed);
+  publishData(pressBMP280, pressBMP280Feed);
 
   delay(10000);
 }
 void initBMP()
 {
-  if (!bmp.begin())
+  if (!bmp.begin(0x76))
   {
-    Serial.println("Could not find a valid BMP085/BMP180 sensor, check wiring!");
+    Serial.println("Could not find a valid BMP085/BMP280 sensor, check wiring!");
     while (1)
     {
     }
   }
+  bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
+                  Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
+                  Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
+                  Adafruit_BMP280::FILTER_X16,      /* Filtering. */
+                  Adafruit_BMP280::STANDBY_MS_500); /* Standby time. */
 }
 
 //  ---------------------------- DEFINICIÓN DE FUNCIONES ----------------------------
@@ -170,36 +173,37 @@ void callback(char *topic, byte *message, unsigned int length)
 
 void readSensorData()
 {
-  tempDHT11 = dht.readTemperature();
-  humDHT11 = dht.readHumidity();
+  tempDHT22 = dht.readTemperature();
+  humDHT22 = dht.readHumidity();
   sensors.requestTemperatures();
   delay(200);
   tempDS18B20 = sensors.getTempCByIndex(0);
-  tempBMP180 = bmp.readTemperature();
-  pressBMP180 = bmp.readPressure()/100;
+  tempBMP280 = bmp.readTemperature();
+  pressBMP280 = bmp.readPressure() / 100;
+
 }
 void printSensorData()
 {
-  // Print BMP180 sensor data
+  // Print BMP280 sensor data
   Serial.println("------------------------");
-  Serial.print("Temperatura BMP180 = ");
-  Serial.print(tempBMP180);
+  Serial.print("Temperatura BMP280 = ");
+  Serial.print(tempBMP280);
   Serial.println(" ºC");
-  Serial.print("Presión BMP180 = ");
-  Serial.print(pressBMP180);
+  Serial.print("Presión BMP280 = ");
+  Serial.print(pressBMP280);
   Serial.println(" hPa");
   Serial.println("------------------------");
   // // Read DS18B20 sensor data
   Serial.print("temperatura DS18B20:");
   Serial.print(tempDS18B20);
   Serial.println("ºC");
-  // // Print DHT11 sensor data
+  // // Print DHT22 sensor data
   Serial.println("------------------------");
-  Serial.print(F("Temperatura DHT11: "));
-  Serial.print(tempDHT11);
+  Serial.print(F("Temperatura DHT22: "));
+  Serial.print(tempDHT22);
   Serial.println(F("ºC "));
-  Serial.print(F("Humedad DHT11: "));
-  Serial.print(humDHT11);
+  Serial.print(F("Humedad DHT22: "));
+  Serial.print(humDHT22);
   Serial.println(F("%"));
   Serial.println("------------------------");
 }
