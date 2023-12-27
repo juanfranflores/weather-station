@@ -77,8 +77,8 @@ for filename in filenames:
     payload = data['payload']
 
     # Publish the payload to the topic
-    client.publish(topic, json.dumps(payload), qos=1)
-    print(f"Published {payload} to {topic}")
+    client.publish(topic, json.dumps(payload), qos=1, retain=True)
+    print(f"Published {filename} to {topic}")
     time.sleep(1)  # add a small delay to ensure the message gets sent
 
 client.loop_stop()  # stop the loop

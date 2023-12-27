@@ -10,7 +10,7 @@
         "max": "100",
         "unit_of_measurement": "%",
         "icon": "mdi:water-percent",
-        "retain": "false",
+        "retain": "true",
         "device": {
             "identifiers": [
                 "weather-station"

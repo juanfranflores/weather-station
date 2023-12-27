@@ -10,7 +10,7 @@
         "max": "1040",
         "unit_of_measurement": "hPa",
         "icon": "mdi:gauge",
-        "retain": "false",
+        "retain": "true",
         "device": {
             "identifiers": [
                 "weather-station"

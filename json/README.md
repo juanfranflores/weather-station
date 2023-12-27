@@ -1,1 +1,0 @@
-Para correr el script, hace falta activar el venv con `source ./json/venv/Scripts/activate`
