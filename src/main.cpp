@@ -18,8 +18,8 @@
 
 const char *ssid = "Flores 2.4GHz";
 const char *password = "Lilas549";
-const char *mqtt_server = "192.168.1.11";
-const char *clientId = "weatherStation";
+const char *mqtt_server = "docker.local";
+const char *clientId = "weather-station";
 
 // ---------------------------- VARIABLES DE SENSORES ----------------------------
 
@@ -31,11 +31,11 @@ float pressBMP280 = 0;
 
 //  ---------------------------- FEEDS  ----------------------------
 
-const char *tempDHT22Feed = "homeassistant/sensor/weatherStation/temperatureDHT22";
-const char *tempDS18B20Feed = "homeassistant/sensor/weatherStation/temperatureDS18B20";
-const char *tempBMP280Feed = "homeassistant/sensor/weatherStation/temperatureBMP280";
-const char *humDHT22Feed = "homeassistant/sensor/weatherStation/humidityDHT22";
-const char *pressBMP280Feed = "homeassistant/sensor/weatherStation/pressureBMP280";
+const char *tempDHT22Feed = "homeassistant/sensor/weather-station/temperatureDHT22";
+const char *tempDS18B20Feed = "homeassistant/sensor/weather-station/temperatureDS18B20";
+const char *tempBMP280Feed = "homeassistant/sensor/weather-station/temperatureBMP280";
+const char *humDHT22Feed = "homeassistant/sensor/weather-station/humidityDHT22";
+const char *pressBMP280Feed = "homeassistant/sensor/weather-station/pressureBMP280";
 
 // ---------------------------- INSTANCIAS DE SENSORES  ----------------------------
 
@@ -180,7 +180,6 @@ void readSensorData()
   tempDS18B20 = sensors.getTempCByIndex(0);
   tempBMP280 = bmp.readTemperature();
   pressBMP280 = bmp.readPressure() / 100;
-
 }
 void printSensorData()
 {

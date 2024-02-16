@@ -1,7 +1,7 @@
 {
-    "topic": "homeassistant/sensor/weatherStation/pressureBMP280/config",
+    "topic": "homeassistant/sensor/weather-station/pressureBMP280/config",
     "payload": {
-        "~": "homeassistant/sensor/weatherStation/pressureBMP280",
+        "~": "homeassistant/sensor/weather-station/pressureBMP280",
         "name": "BMP280 Pressure",
         "unique_id": "bmp280_pressure",
         "cmd_t": "~",

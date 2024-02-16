@@ -6,6 +6,7 @@ Functions:
 - on_connect(client, userdata, flags, rc): Connects to the MQTT broker
 """
 import sys
+import os
 import time
 import json
 import glob
@@ -37,7 +38,7 @@ client.on_connect = on_connect
 
 # Connect to the MQTT broker and error handling
 try:
-    client.connect("192.168.1.11", 1883, 60)
+    client.connect("docker.local", 1883, 60)
 
 except ConnectionRefusedError:
     print("Connection refused. Please check your broker settings.")
@@ -63,8 +64,10 @@ if len(sys.argv) > 1:
     # A filename was provided, send only that file
     filenames = sys.argv[1:]
 else:
-    # No filename was provided, send all .json files in the current directory
-    filenames = glob.glob('*.json')
+    # No filename was provided, send all .json files in the file where this script is located
+
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    filenames = glob.glob(os.path.join(script_dir, '*.json'))
 
 # Loop over the list of filenames
 for filename in filenames:
